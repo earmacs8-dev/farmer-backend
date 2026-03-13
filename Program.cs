@@ -8,6 +8,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ---------------- DB ----------------
 builder.Services.AddSingleton<AppDbContext>();
+builder.Services.AddSingleton<CropService>();
+
+// ---------------- CORS ----------------
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 // ---------------- JWT ----------------
 var jwtKey = builder.Configuration["Jwt:Key"];
@@ -45,6 +57,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseCors("Frontend");
 app.UseAuthentication();
 app.UseAuthorization();
 
