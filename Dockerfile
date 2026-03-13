@@ -12,6 +12,6 @@ WORKDIR /app
 
 COPY --from=build /app/publish ./
 
-EXPOSE 10000
+EXPOSE 8080
 
-CMD ["sh", "-c", "dotnet FarmerApp.Api.dll --urls http://0.0.0.0:${PORT:-10000}"]
+CMD ["dotnet", "FarmerApp.Api.dll"]
